@@ -1,9 +1,15 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_offering, only: [:create]
   before_action :authenticate_user!, except: [:index, :show]
   load_and_authorize_resource
   # GET /courses
   # GET /courses.json
+
+  def set_offering
+    @offering=Offering.find(params[:offering_id])
+  end
+
   def index
     @courses = Course.all
   end
@@ -25,13 +31,13 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.json
   def create
-    @course = Course.new(course_params)
+
     #@course.user = current_user
 
     respond_to do |format|
-      if @course.save
-        format.html { redirect_to @course, notice: 'Course was successfully created.' }
-        format.json { render :show, status: :created, location: @course }
+      if @offering.courses.create(course_params)
+        format.html { redirect_to @offering, notice: 'Course was successfully created.' }
+        format.json { render :show, status: :created, location: @offering }
       else
         format.html { render :new }
         format.json { render json: @course.errors, status: :unprocessable_entity }

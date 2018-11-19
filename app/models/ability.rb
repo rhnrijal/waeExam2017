@@ -8,9 +8,11 @@ class Ability
       can :manage, :all
 
     elsif user.student?
+      can :read, Offering
       can :read, Course
     else
-      can :read , Course
+      can :read , Offering
+      can :read, Course
     end
   end
 end

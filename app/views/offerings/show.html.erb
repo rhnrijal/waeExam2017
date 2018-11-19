@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @offering.year %>
+</p>
+
+<p>
+  <strong>Semester:</strong>
+  <%= @offering.semester %>
+</p>
+
+
+<h2>Courses offered</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Code</th>
+    <th>Title</th>
+    <th>Register this course</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @offering.courses.each do |course| %>
+    <tr>
+      <td><%= course.code %></td>
+      <td><%= course.title %></td>
+      <td><%= link_to 'Register', offerings_path %></td>
+
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<br/>
+<h2>Add a course:</h2>
+<%= form_for([@offering, @offering.courses.build]) do |f| %>
+  <div class="field">
+    <%= f.label :code %>
+    <br/>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :title %>
+    <br/>
+    <%= f.text_field :title %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_offering_path(@offering) %> |
+<%= link_to 'Back', offerings_path %>
